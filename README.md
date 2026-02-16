@@ -90,3 +90,22 @@ SSH:
 ```bash
 ssh root@192.168.0.100
 ```
+
+### 6. Compilation (Toolchain)
+Use the toolchain by either exporting its path or using the full prefix `arm-Neko-linux-musleafih`.
+
+Option A: export the toolchain path
+```bash
+export PATH="/path/to/toolchain/bin:$PATH"
+arm-Neko-linux-musleafih-gcc --version
+```
+
+Option B: use the full prefix directly
+```bash
+/path/to/toolchain/bin/arm-Neko-linux-musleafih-gcc --version
+```
+
+Example: compile a simple program
+```bash
+arm-Neko-linux-musleafih-gcc -O2 -Wall -o hello hello.c
+```
