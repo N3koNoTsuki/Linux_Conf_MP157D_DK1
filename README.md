@@ -21,8 +21,8 @@ Inside `parted`:
 (parted) mkpart fsbl2 4096s 6143s
 (parted) mkpart fip 6144s 10239s
 (parted) mkpart bootfs 10240s 131071s
-(parted) mkpart rootfs 131072s 147455s
-(parted) mkpart data 147456s 100%
+(parted) mkpart rootfs 131072s 233471s
+(parted) mkpart data 233472s 100%
 (parted) print
 ```
 
@@ -77,7 +77,7 @@ STM32MP>
 ```text
 setenv ipaddr 192.168.0.100
 setenv bootargs 'console=ttySTM0,115200 root=/dev/mmcblk0p5 rootfstype=squashfs ro rootwait'
-setenv bootcmd 'mmc dev 0; load mmc 0:4 0xc2000000 zImage; load mmc 0:4 0xc4000000 stm32mp157a-dk1-custom.dtb; bootz 0xc2000000 - 0xc4000000'
+setenv bootcmd 'mmc dev 0; load mmc 0:4 0xc2000000 zImage; load mmc 0:4 0xc4000000 stm32mp157a-dk1.dtb; bootz 0xc2000000 - 0xc4000000'
 saveenv
 ```
 
