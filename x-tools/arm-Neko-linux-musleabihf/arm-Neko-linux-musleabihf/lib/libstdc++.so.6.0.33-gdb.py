@@ -1,1 +1,0 @@
-../../arm-Neko-linux-musleabihf/sysroot/lib/libstdc++.so.6.0.33-gdb.py
