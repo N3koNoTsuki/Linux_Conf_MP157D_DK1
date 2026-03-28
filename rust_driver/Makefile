@@ -1,10 +1,7 @@
 # ===== Kbuild part =====
-obj-m += hello_driver.o
-obj-m += nekoi2c_driver.o
+#obj-m += hello_driver.o
+obj-m += Ds3231.o
 # ===== External build support =====
-KDIR ?= ~/Documents/Cour/Stm_Dk1/kernel/linux_C/
-ARCH ?= arm
-CROSS_COMPILE ?= arm-Neko-linux-musleabihf-
 
 BUILD_DIR := $(PWD)/output
 
