@@ -1,5 +1,5 @@
-   0.016319400s  INFO prepare_target{force=false package_id=ds3231-rust-driver v0.1.0 (C:\Users\jbell\OneDrive\cours\Linux_Conf_MP157D_DK1\rust_driver) target="ds3231_rust_driver"}: cargo::core::compiler::fingerprint: fingerprint error for ds3231-rust-driver v0.1.0 (C:\Users\jbell\OneDrive\cours\Linux_Conf_MP157D_DK1\rust_driver)/Check { test: false }/TargetInner { name_inferred: true, ..: lib_target("ds3231_rust_driver", ["lib"], "C:\\Users\\jbell\\OneDrive\\cours\\Linux_Conf_MP157D_DK1\\rust_driver\\Ds3231.rs", Edition2021) }
-   0.016399800s  INFO prepare_target{force=false package_id=ds3231-rust-driver v0.1.0 (C:\Users\jbell\OneDrive\cours\Linux_Conf_MP157D_DK1\rust_driver) target="ds3231_rust_driver"}: cargo::core::compiler::fingerprint:     err: failed to read `C:\Users\jbell\OneDrive\cours\Linux_Conf_MP157D_DK1\rust_driver\target\debug\.fingerprint\ds3231-rust-driver-a95bae3f31632159\lib-ds3231_rust_driver`
+   0.010350100s  INFO prepare_target{force=false package_id=ds3231-rust-driver v0.1.0 (C:\Users\jbell\OneDrive\cours\Linux_Conf_MP157D_DK1\rust_driver) target="ds3231_rust_driver"}: cargo::core::compiler::fingerprint: fingerprint error for ds3231-rust-driver v0.1.0 (C:\Users\jbell\OneDrive\cours\Linux_Conf_MP157D_DK1\rust_driver)/Check { test: false }/TargetInner { name_inferred: true, ..: lib_target("ds3231_rust_driver", ["lib"], "C:\\Users\\jbell\\OneDrive\\cours\\Linux_Conf_MP157D_DK1\\rust_driver\\Ds3231.rs", Edition2021) }
+   0.010394500s  INFO prepare_target{force=false package_id=ds3231-rust-driver v0.1.0 (C:\Users\jbell\OneDrive\cours\Linux_Conf_MP157D_DK1\rust_driver) target="ds3231_rust_driver"}: cargo::core::compiler::fingerprint:     err: failed to read `C:\Users\jbell\OneDrive\cours\Linux_Conf_MP157D_DK1\rust_driver\target\debug\.fingerprint\ds3231-rust-driver-a95bae3f31632159\lib-ds3231_rust_driver`
 
 Caused by:
     The system cannot find the file specified. (os error 2)
@@ -26,8 +26,8 @@ Stack backtrace:
   18: git_midx_writer_dump
   19: BaseThreadInitThunk
   20: RtlUserThreadStart
-   0.036987700s  INFO prepare_target{force=false package_id=ds3231-rust-driver v0.1.0 (C:\Users\jbell\OneDrive\cours\Linux_Conf_MP157D_DK1\rust_driver) target="ds3231_rust_driver"}: cargo::core::compiler::fingerprint: fingerprint error for ds3231-rust-driver v0.1.0 (C:\Users\jbell\OneDrive\cours\Linux_Conf_MP157D_DK1\rust_driver)/Check { test: true }/TargetInner { name_inferred: true, ..: lib_target("ds3231_rust_driver", ["lib"], "C:\\Users\\jbell\\OneDrive\\cours\\Linux_Conf_MP157D_DK1\\rust_driver\\Ds3231.rs", Edition2021) }
-   0.037029000s  INFO prepare_target{force=false package_id=ds3231-rust-driver v0.1.0 (C:\Users\jbell\OneDrive\cours\Linux_Conf_MP157D_DK1\rust_driver) target="ds3231_rust_driver"}: cargo::core::compiler::fingerprint:     err: failed to read `C:\Users\jbell\OneDrive\cours\Linux_Conf_MP157D_DK1\rust_driver\target\debug\.fingerprint\ds3231-rust-driver-df4687029facaf1f\test-lib-ds3231_rust_driver`
+   0.019340900s  INFO prepare_target{force=false package_id=ds3231-rust-driver v0.1.0 (C:\Users\jbell\OneDrive\cours\Linux_Conf_MP157D_DK1\rust_driver) target="ds3231_rust_driver"}: cargo::core::compiler::fingerprint: fingerprint error for ds3231-rust-driver v0.1.0 (C:\Users\jbell\OneDrive\cours\Linux_Conf_MP157D_DK1\rust_driver)/Check { test: true }/TargetInner { name_inferred: true, ..: lib_target("ds3231_rust_driver", ["lib"], "C:\\Users\\jbell\\OneDrive\\cours\\Linux_Conf_MP157D_DK1\\rust_driver\\Ds3231.rs", Edition2021) }
+   0.019367700s  INFO prepare_target{force=false package_id=ds3231-rust-driver v0.1.0 (C:\Users\jbell\OneDrive\cours\Linux_Conf_MP157D_DK1\rust_driver) target="ds3231_rust_driver"}: cargo::core::compiler::fingerprint:     err: failed to read `C:\Users\jbell\OneDrive\cours\Linux_Conf_MP157D_DK1\rust_driver\target\debug\.fingerprint\ds3231-rust-driver-df4687029facaf1f\test-lib-ds3231_rust_driver`
 
 Caused by:
     The system cannot find the file specified. (os error 2)
@@ -55,6 +55,6 @@ Stack backtrace:
   19: BaseThreadInitThunk
   20: RtlUserThreadStart
     Checking ds3231-rust-driver v0.1.0 (C:\Users\jbell\OneDrive\cours\Linux_Conf_MP157D_DK1\rust_driver)
-error: could not compile `ds3231-rust-driver` (lib) due to 31 previous errors
+error: could not compile `ds3231-rust-driver` (lib) due to 29 previous errors
 warning: build failed, waiting for other jobs to finish...
-error: could not compile `ds3231-rust-driver` (lib test) due to 31 previous errors
+error: could not compile `ds3231-rust-driver` (lib test) due to 29 previous errors

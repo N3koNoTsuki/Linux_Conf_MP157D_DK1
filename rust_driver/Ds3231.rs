@@ -30,8 +30,6 @@ const REG_ALARM1_MINUTES:       u8 = 0x08;
 const REG_ALARM1_HOURS:         u8 = 0x09;
 const REG_ALARM1_DAYS_DATE:     u8 = 0x0A;
 const REG_ALARM2_MINUTES:       u8 = 0x0B;
-const REG_ALARM2_HOURS:         u8 = 0x0C;
-const REG_ALARM2_DAYS_DATE:     u8 = 0x0D;
 const REG_CONTROL:              u8 = 0x0E;
 const REG_CONTROL_STATUS:       u8 = 0x0F;
 const REG_AGING_OFFSET:         u8 = 0x10;
@@ -89,19 +87,9 @@ fn bcd2bin(v: u8) -> u8 {
     (v & 0x0f) + ((v >> 4) * 10)
 }
 
-fn read_seconds(client: &ARef<i2c::I2cClient>) -> Result<u8> {
-    let raw = read_reg_u8(client, REG_SECONDS)?;
-    Ok(bcd2bin(raw & 0x7f))
-}
-
-fn read_minutes(client: &ARef<i2c::I2cClient>) -> Result<u8> {
-    let raw = read_reg_u8(client, REG_MINUTES)?;
-    Ok(bcd2bin(raw & 0x7f))
-}
-
-fn read_hours(client: &ARef<i2c::I2cClient>) -> Result<u8> {
-    let raw = read_reg_u8(client, REG_HOURS)?;
-    Ok(bcd2bin(raw & 0x7f))
+fn read_reg(client: &ARef<i2c::I2cClient>, reg: u8) -> Result<u8> {
+    let raw = read_reg_u8(client, reg)?;
+    Ok(bcd2bin(raw))
 }
 
 fn format_hms(hours: u8, minutes: u8, seconds: u8) -> [u8; 9] {
@@ -114,6 +102,36 @@ fn format_hms(hours: u8, minutes: u8, seconds: u8) -> [u8; 9] {
         b':',
         b'0' + (seconds / 10),
         b'0' + (seconds % 10),
+        b' ',
+    ]
+}
+
+fn format_date(century: u8, year: u8, month: u8, day: u8) -> [u8; 11] {
+    [
+        b'0' + (month / 10),
+        b'0' + (month % 10),
+        b'/',
+        b'0' + (day / 10),
+        b'0' + (day % 10),
+        b'/',
+        b'0' + (century / 10),
+        b'0' + (century % 10),
+        b'0' + (year / 10),
+        b'0' + (year % 10),
+        b'\n',
+    ]
+}
+
+fn format_temp(MSB: u8, LSB: u8, sign: u8) -> [u8; 9] {
+    [
+        if sign == 0 {b'+'} else {b'-'},
+        b'0' + (MSB / 10),
+        b'0' + (MSB % 10),
+        b'.',
+        b'0' + ((LSB * 25) / 10),
+        b'0' + ((LSB * 25) % 10),
+        b' ',
+        b'C',
         b'\n',
     ]
 }
@@ -136,7 +154,7 @@ impl MiscDevice for Ds3231File {
     fn ioctl(me: Pin<&Self>, _file: &File, cmd: u32, arg: usize) -> Result<isize> {
         match cmd {
             DS3231_IOCTL_GET_SECONDS => {
-                let seconds = read_seconds(&me.client)?;
+                let seconds = read_reg(&me.client, REG_SECONDS)?;
                 let res = unsafe {
                     bindings::_copy_to_user(
                         arg as *mut c_void,
@@ -155,11 +173,25 @@ impl MiscDevice for Ds3231File {
 
     fn read_iter(mut kiocb: Kiocb<'_, Self::Ptr>, iov: &mut IovIterDest<'_>,) -> Result<usize> {
         let client = unsafe { GLOBAL_CLIENT.clone() }.ok_or(ENODEV)?;
-        let seconds = read_seconds(&client)?;
-        let minutes = read_minutes(&client)?;
-        let hours = read_hours(&client)?;
+        let seconds = read_reg(&client, REG_SECONDS)?;
+        let minutes = read_reg(&client, REG_MINUTES)?;
+        let hours = read_reg(&client, REG_HOURS)? & 0x1f;
+       // let days = read_reg_u8(&client, REG_DAYS)? & 0x07;
+        let date = read_reg(&client, REG_DATE)? & 0x3f;
+        let month = read_reg(&client, REG_MONTH_CENTURY)? & 0x1f;
+        let year = read_reg(&client, REG_YEAR)?;
+        let century = if (read_reg_u8(&client, REG_MONTH_CENTURY)? & 0x80) != 0 { 20 } else { 19 };
+        let temp_MSB = read_reg_u8(&client, REG_TEMP_MSB)? & 0x7f;
+        let temp_LSB = read_reg_u8(&client, REG_TEMP_LSB)? & 0xA0 >> 6;
+        let temp_Sign = if (read_reg_u8(&client, REG_TEMP_MSB)? & 0x80) != 0 { 1 } else { 0 };
         let data = format_hms(hours, minutes, seconds);
-        let read = iov.simple_read_from_buffer(kiocb.ki_pos_mut(), &data)?;
+        let data2 = format_date(century, year, month, date);
+        let data3 = format_temp(temp_MSB, temp_LSB, temp_Sign);
+        let mut data_all = [0u8; 29];
+        data_all[..9].copy_from_slice(&data);
+        data_all[9..20].copy_from_slice(&data2);
+        data_all[20..].copy_from_slice(&data3);
+        let read = iov.simple_read_from_buffer(kiocb.ki_pos_mut(), &data_all)?;
         Ok(read)
     }
 }
