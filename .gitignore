@@ -1,0 +1,10 @@
+# Cargo files
+/rust_driver/target
+/rust_driver/Cargo.toml
+/rust_driver/Cargo.lock
+
+# Ignore build artifacts and test binaries
+/rust_driver/*.ko
+/rust_driver/test_ioctl
+/rust_driver/build
+/rust_driver/output
