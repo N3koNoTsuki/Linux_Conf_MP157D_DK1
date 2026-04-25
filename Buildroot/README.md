@@ -1,6 +1,6 @@
-# Buildroot — Root Filesystem for STM32MP157A-DK1
+# Buildroot — Root Filesystem for STM32MP157D-DK1
 
-[Buildroot](https://buildroot.org) is an automated build system that downloads, cross-compiles and packages all software needed for an embedded Linux root filesystem. This directory contains the Buildroot configuration used to produce the `rootfs.ext4` image for the STM32MP157A-DK1 board.
+[Buildroot](https://buildroot.org) is an automated build system that downloads, cross-compiles and packages all software needed for an embedded Linux root filesystem. This directory contains the Buildroot configuration used to produce the `rootfs.ext4` image for the STM32MP157D-DK1 board.
 
 ## Files
 

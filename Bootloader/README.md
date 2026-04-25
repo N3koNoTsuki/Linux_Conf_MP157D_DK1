@@ -1,4 +1,4 @@
-# Bootloader — TF-A and U-Boot for STM32MP157A-DK1
+# Bootloader — TF-A and U-Boot for STM32MP157D-DK1
 
 This directory holds the two pre-built bootloader binaries that must be flashed onto the SD card before Linux can boot.
 
